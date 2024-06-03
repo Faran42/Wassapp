@@ -1,24 +1,43 @@
-import { Slot } from "expo-router";
+import { Slot, useRouter, useSegments } from "expo-router";
 import { StatusBar, View } from "react-native";
-import "../global.css";
 
-//força a rota incial
-// export const unstable_settings = {
-//   // Ensure that reloading on `/modal` keeps a back button present.
-//   initialRouteName: "(tabs)",
-// };
+import "../global.css";
+import { AuthContextProvider, useAuth } from "~/context/authContext";
+
+import { useEffect } from "react";
+
+const MainLayout = () => {
+  const { isAuthenticated } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(isAuthenticated);
+
+    //check if user is authenticated or not
+    if (typeof isAuthenticated == "undefined") return;
+
+    const inApp = segments[0] == "(app)";
+
+    if (isAuthenticated && !inApp) {
+      //redirect to home
+      router.replace("home");
+    } else if (isAuthenticated == false) {
+      //redirect to signIn
+      router.replace("signIn");
+    }
+  }, [isAuthenticated]);
+
+  return <Slot />;
+};
 
 export default function RootLayout() {
   return (
-    // <Stack>
-    //   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    //   <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-    // </Stack>
     <>
       <StatusBar translucent />
-      <View className="flex-1">
-        <Slot />
-      </View>
+      <AuthContextProvider>
+        <MainLayout />
+      </AuthContextProvider>
     </>
   );
 }
