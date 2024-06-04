@@ -22,8 +22,8 @@ export default function SignIn() {
   const emailRef = useRef("");
   const passwordRef = useRef("");
 
-  const handleSubmitButton = async () => {
-    if (emailRef.current === "" || passwordRef.current === "") {
+  const handleLogin = async () => {
+    if (!emailRef.current || !passwordRef.current) {
       Alert.alert("Login", "Por favor, preencha todos os campos.");
     }
   };
@@ -32,7 +32,7 @@ export default function SignIn() {
     <View className="flex-1">
       <StatusBar style="dark" />
       <View
-        style={{ paddingTop: hp(8), paddingHorizontal: wp(8) }}
+        style={{ paddingTop: hp(7), paddingHorizontal: wp(5) }}
         className="flex-1 gap-12">
         {/* signIn image */}
         <View className="items-center">
@@ -96,7 +96,7 @@ export default function SignIn() {
                 </View>
               ) : (
                 <TouchableOpacity
-                  onPress={handleSubmitButton}
+                  onPress={handleLogin}
                   style={{ height: hp(6.5) }}
                   className="items-center justify-center rounded-xl bg-indigo-500">
                   <Text
@@ -118,7 +118,7 @@ export default function SignIn() {
                 <Text
                   style={{ fontSize: hp(1.8) }}
                   className="font-bold text-indigo-500">
-                  Criar conta.
+                  Cadastrar
                 </Text>
               </Pressable>
             </View>
