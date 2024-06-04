@@ -8,7 +8,7 @@ export default function Home() {
     await logout();
   };
 
-  console.log("user data", user);
+  // console.log("home page, user data:", user);
 
   return (
     <View>

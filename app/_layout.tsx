@@ -12,8 +12,6 @@ const MainLayout = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(isAuthenticated);
-
     //check if user is authenticated or not
     if (typeof isAuthenticated == "undefined") return;
 

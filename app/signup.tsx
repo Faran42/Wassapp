@@ -48,7 +48,7 @@ export default function SignUp() {
 
     setIsLoading(false);
 
-    console.log("got result: ", response);
+    // console.log("got result: ", response);
     if (!response.success) {
       Alert.alert("Cadastro", response.msg);
     }
