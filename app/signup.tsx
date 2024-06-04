@@ -14,10 +14,12 @@ import {
 
 import CustomKeyBoardView from "~/components/CustomKeyboardView";
 import Loading from "~/components/Loading";
+import { useAuth } from "~/context/authContext";
 import { hp, wp } from "~/utils/responsiveDimensions";
 
 export default function SignUp() {
   const router = useRouter();
+  const { register } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
   const usernamedRef = useRef("");
@@ -33,6 +35,22 @@ export default function SignUp() {
       !profileUrlRef.current
     ) {
       Alert.alert("Cadastro", "Por favor, preencha todos os campos.");
+    }
+
+    setIsLoading(true);
+
+    const response = await register(
+      usernamedRef.current,
+      emailRef.current,
+      passwordRef.current,
+      profileUrlRef.current
+    );
+
+    setIsLoading(false);
+
+    console.log("got result: ", response);
+    if (!response.success) {
+      Alert.alert("Cadastro", response.msg);
     }
   };
 

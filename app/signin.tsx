@@ -13,11 +13,13 @@ import {
 } from "react-native";
 
 import Loading from "~/components/Loading";
+import { useAuth } from "~/context/authContext";
 import { hp, wp } from "~/utils/responsiveDimensions";
 
 export default function SignIn() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -26,6 +28,14 @@ export default function SignIn() {
     if (!emailRef.current || !passwordRef.current) {
       Alert.alert("Login", "Por favor, preencha todos os campos.");
     }
+
+    setIsLoading(true);
+    const response = await login(emailRef.current, passwordRef.current);
+    setIsLoading(false);
+
+    if (!response.success) {
+      Alert.alert("Login", response.msg);
+    }
   };
 
   return (
@@ -33,7 +43,8 @@ export default function SignIn() {
       <StatusBar style="dark" />
       <View
         style={{ paddingTop: hp(7), paddingHorizontal: wp(5) }}
-        className="flex-1 gap-12">
+        className="flex-1 gap-12"
+      >
         {/* signIn image */}
         <View className="items-center">
           <Image
@@ -49,7 +60,8 @@ export default function SignIn() {
         <View className="gap-10">
           <Text
             style={{ fontSize: hp(4) }}
-            className="text-center font-bold tracking-wider text-neutral-800">
+            className="text-center font-bold tracking-wider text-neutral-800"
+          >
             Login
           </Text>
 
@@ -57,7 +69,8 @@ export default function SignIn() {
           <View className="gap-4">
             <View
               style={{ height: hp(7) }}
-              className="flex-row items-center gap-4 rounded-2xl bg-neutral-100 px-4">
+              className="flex-row items-center gap-4 rounded-2xl bg-neutral-100 px-4"
+            >
               <Octicons name="mail" size={hp(2.7)} color="gray" />
               <TextInput
                 onChangeText={(value) => (emailRef.current = value)}
@@ -70,7 +83,8 @@ export default function SignIn() {
             <View className="gap-3">
               <View
                 style={{ height: hp(7) }}
-                className="flex-row items-center gap-4 rounded-2xl bg-neutral-100 px-4">
+                className="flex-row items-center gap-4 rounded-2xl bg-neutral-100 px-4"
+              >
                 <Octicons name="lock" size={hp(2.7)} color="gray" />
                 <TextInput
                   onChangeText={(value) => (passwordRef.current = value)}
@@ -83,7 +97,8 @@ export default function SignIn() {
               </View>
               <Text
                 style={{ fontSize: hp(1.8) }}
-                className="text-right font-semibold text-neutral-500">
+                className="text-right font-semibold text-neutral-500"
+              >
                 Esqueceu a senha?
               </Text>
             </View>
@@ -98,10 +113,12 @@ export default function SignIn() {
                 <TouchableOpacity
                   onPress={handleLogin}
                   style={{ height: hp(6.5) }}
-                  className="items-center justify-center rounded-xl bg-indigo-500">
+                  className="items-center justify-center rounded-xl bg-indigo-500"
+                >
                   <Text
                     style={{ fontSize: hp(2.7) }}
-                    className="font-bold tracking-wider text-white">
+                    className="font-bold tracking-wider text-white"
+                  >
                     Entrar
                   </Text>
                 </TouchableOpacity>
@@ -111,13 +128,15 @@ export default function SignIn() {
             <View className="flex-row justify-center">
               <Text
                 style={{ fontSize: hp(1.8) }}
-                className="font-semibold text-neutral-500">
+                className="font-semibold text-neutral-500"
+              >
                 Ainda não tem uma conta?{" "}
               </Text>
               <Pressable onPress={() => router.push("signup")}>
                 <Text
                   style={{ fontSize: hp(1.8) }}
-                  className="font-bold text-indigo-500">
+                  className="font-bold text-indigo-500"
+                >
                   Cadastrar
                 </Text>
               </Pressable>
