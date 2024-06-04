@@ -103,7 +103,7 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
         userId: response?.user?.uid,
       });
 
-      return { success: false, data: response?.user };
+      return { success: true, data: response?.user };
     } catch (e: any) {
       let msg = e.message;
 

@@ -2,6 +2,8 @@ import { Slot, useRouter, useSegments } from "expo-router";
 import { StatusBar, View } from "react-native";
 
 import "../global.css";
+import { MenuProvider } from "react-native-popup-menu";
+
 import { AuthContextProvider, useAuth } from "~/context/authContext";
 
 import { useEffect } from "react";
@@ -32,10 +34,11 @@ const MainLayout = () => {
 export default function RootLayout() {
   return (
     <>
-      <StatusBar translucent />
-      <AuthContextProvider>
-        <MainLayout />
-      </AuthContextProvider>
+      <MenuProvider>
+        <AuthContextProvider>
+          <MainLayout />
+        </AuthContextProvider>
+      </MenuProvider>
     </>
   );
 }

@@ -11,8 +11,14 @@ export interface IAuthContextRegisterProps {
   profileUrl: string;
 }
 
+interface UserProps extends FirebaseUser {
+  username: string;
+  profileUrl: string;
+  userId: string;
+}
+
 export interface IAuthContextProps {
-  user: FirebaseUser | null;
+  user: UserProps | null;
   isAuthenticated: boolean | undefined;
   login: (
     email: string,
