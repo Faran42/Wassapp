@@ -1,5 +1,6 @@
 import React, {
   PropsWithChildren,
+  ReactNode,
   createContext,
   useContext,
   useEffect,
@@ -8,9 +9,7 @@ import React, {
 
 export const AuthContext = createContext({});
 
-export const AuthContextProvider: React.FC<PropsWithChildren<object>> = ({
-  children,
-}) => {
+export function AuthContextProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState<undefined | boolean>(
     undefined
@@ -19,9 +18,9 @@ export const AuthContextProvider: React.FC<PropsWithChildren<object>> = ({
   useEffect(() => {
     // onAuthStateChanged
 
-    setTimeout(() => {
-      setIsAuthenticated(true);
-    }, 1000);
+    // setTimeout(() => {
+    setIsAuthenticated(false);
+    // }, 1000);
   }, []);
 
   const login = async (email, password) => {
@@ -45,7 +44,7 @@ export const AuthContextProvider: React.FC<PropsWithChildren<object>> = ({
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => {
   const value = useContext(AuthContext);

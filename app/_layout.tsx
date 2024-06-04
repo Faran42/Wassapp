@@ -24,7 +24,7 @@ const MainLayout = () => {
       router.replace("home");
     } else if (isAuthenticated == false) {
       //redirect to signIn
-      router.replace("signIn");
+      router.replace("signin");
     }
   }, [isAuthenticated]);
 
