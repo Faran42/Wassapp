@@ -1,12 +1,7 @@
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Platform, Text, View } from "react-native";
-import {
-  Menu,
-  MenuOption,
-  MenuOptions,
-  MenuTrigger,
-} from "react-native-popup-menu";
+import { Menu, MenuOptions, MenuTrigger } from "react-native-popup-menu";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import CustomMenuItem from "./CustomMenuItem";
@@ -31,7 +26,7 @@ export default function HomeHeader() {
   return (
     <View
       style={{ paddingTop: ios ? top : top + 10 }}
-      className="flex-row justify-between rounded-b-3xl bg-indigo-400 px-5 pb-6 shadow"
+      className="flex-row justify-between rounded-b-3xl bg-indigo-400 px-5 pb-4 shadow"
     >
       <View>
         <Text style={{ fontSize: hp(3) }} className="font-medium text-white">
@@ -50,7 +45,7 @@ export default function HomeHeader() {
               }}
             >
               <Image
-                style={{ height: hp(4.3), aspectRatio: 1, borderRadius: 100 }}
+                style={{ height: hp(5), aspectRatio: 1, borderRadius: 100 }}
                 source={user?.profileUrl}
                 placeholder={blurhash}
                 transition={500}

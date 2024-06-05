@@ -11,7 +11,7 @@ export interface IAuthContextRegisterProps {
   profileUrl: string;
 }
 
-interface UserProps extends FirebaseUser {
+export interface UserProps extends FirebaseUser {
   username: string;
   profileUrl: string;
   userId: string;
