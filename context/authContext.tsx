@@ -43,7 +43,6 @@ export function AuthContextProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
-      // console.log("got user: ", user);
       if (user) {
         setIsAuthenticated(true);
         setUser(user);

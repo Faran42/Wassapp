@@ -28,8 +28,6 @@ export default function Home() {
       data.push({ ...doc.data() });
     });
 
-    console.log("got users: ", data);
-
     setUsers(data);
   };
 
@@ -38,7 +36,7 @@ export default function Home() {
       <StatusBar barStyle="light-content" />
 
       {users.length > 0 ? (
-        <ChatList users={users} />
+        <ChatList currentUser={user} users={users} />
       ) : (
         <View className="flex items-center" style={{ top: hp(30) }}>
           <Loading size={hp(8)} />

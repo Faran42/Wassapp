@@ -3,7 +3,7 @@ import { FlatList, Text, View } from "react-native";
 
 import ChatItem from "./ChatItem";
 
-export default function ChatList({ users }: { users: any }) {
+export default function ChatList({ users, currentUser }) {
   const router = useRouter();
   return (
     <View>
@@ -17,6 +17,7 @@ export default function ChatList({ users }: { users: any }) {
             noBorder={index + 1 == users.length}
             router={router}
             item={item}
+            currentUser={currentUser}
           />
         )}
       />

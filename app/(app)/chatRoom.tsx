@@ -12,7 +12,13 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useEffect, useRef, useState } from "react";
-import { Alert, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Keyboard,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import ChatRoomHeader from "~/components/ChatRoomHeader";
 import CustomKeyBoardView from "~/components/CustomKeyboardView";
@@ -30,6 +36,7 @@ export default function ChatRoom() {
   const [messages, setMessages] = useState([]);
   const textRef = useRef("");
   const inputRef = useRef<TextInput>(null);
+  const scrollViewRef = useRef(null);
 
   const handleSendMessage = async () => {
     const message = textRef.current.trim();
@@ -48,8 +55,6 @@ export default function ChatRoom() {
         senderName: user?.username,
         createdAt: Timestamp.fromDate(new Date()),
       });
-
-      console.log("new message id: ", newDoc.id);
     } catch (e) {
       Alert.alert(
         "Erro na mensagem",
@@ -67,6 +72,12 @@ export default function ChatRoom() {
     });
   };
 
+  const updateScrollView = () => {
+    setTimeout(() => {
+      scrollViewRef?.current?.scrollToEnd({ animated: true });
+    }, 100);
+  };
+
   useEffect(() => {
     createRoomIfNotExists();
 
@@ -81,7 +92,21 @@ export default function ChatRoom() {
       });
       setMessages([...allMessages]);
     });
+
+    const KeyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      updateScrollView
+    );
+
+    return () => {
+      KeyboardDidShowListener.remove();
+      unsub();
+    };
   }, []);
+
+  useEffect(() => {
+    updateScrollView();
+  }, [messages]);
 
   return (
     <CustomKeyBoardView inChat>
@@ -91,7 +116,11 @@ export default function ChatRoom() {
         <View className="h-3 border-b border-neutral-300" />
         <View className="flex-1 justify-between overflow-visible bg-neutral-300">
           <View className="flex-1">
-            <MessagesList messages={messages} currentUser={user} />
+            <MessagesList
+              scrollViewRef={scrollViewRef}
+              messages={messages}
+              currentUser={user}
+            />
           </View>
           <View style={{ marginBottom: hp(1.7) }} className="pt-2">
             <View className="mx-3 flex-row justify-between rounded-full border border-neutral-300 bg-white p-2 pl-5">
